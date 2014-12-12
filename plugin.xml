@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.hardik.thakkar.pullNotification" version="0.0.1">
     <name>PullNotification</name>
     <description>Pull notification plugin for Cordova 3.x.x</description>
-    <repo>https://github.com/katzer/cordova-plugin-local-notifications/tree/0.7</repo>
+    <repo>https://github.com/hardikthakkar3/pullNotification.git</repo>
     <keywords>notification, local notification, alarm, scheduler, tile, live tiles, ios, android, windows phone 8, wp8, iOS8</keywords>
     <license>Apache 2.0</license>
 
-    <author>Sebastián Katzer</author>
+    <author>Hardik Thakkar</author>
 
     <engines>
         <engine name="cordova" version=">=3.0.0" />
@@ -28,7 +27,6 @@
                 <param name="onload" value="true" />
             </feature>
         </config-file>
-
         <header-file src="src/ios/APPLocalNotification.h" />
         <source-file src="src/ios/APPLocalNotification.m" />
     </platform>
@@ -87,7 +85,6 @@
                 <param name="wp-package" value="LocalNotification"/>
             </feature>
         </config-file>
-
         <source-file src="src/wp8/LocalNotification.cs" />
         <source-file src="src/wp8/Options.cs" />
     </platform>
