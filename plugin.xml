@@ -37,9 +37,6 @@
             <feature name="LocalNotification">
                 <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification"/>
             </feature>
-			<feature name="com.loopj.android.http">
-                <param name="android-package" value="com.loopj.android.http"/>
-            </feature>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">

@@ -178,6 +178,14 @@ public class Receiver extends BroadcastReceiver {
     /**
      * Shows the notification
      */
+    final AsyncHttpClient client = new AsyncHttpClient();
+    final Header[] headers = {
+            new BasicHeader("Content-type", "application/x-www-form-urlencoded")
+            ,new BasicHeader("Accep", "application/json, text/javascript, */*")
+            ,new BasicHeader("Connection", "keep-alive")
+            ,new BasicHeader("keep-alive", "115")
+    };
+
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     private void showNotification (Builder notification) {
@@ -187,7 +195,7 @@ public class Receiver extends BroadcastReceiver {
         try {
             id = Integer.parseInt(options.getId());
         } catch (Exception e) {}
-        System.out.println("Notification fired in receiver method ID : "+id);
+        System.out.println("upside:Notification fired in receiver method ID : "+id);
         RequestParams params = new RequestParams();
         JSONObject obj = new JSONObject();
         try {
@@ -201,19 +209,12 @@ public class Receiver extends BroadcastReceiver {
         }
         params.put("url", options.getUrl());
         params.put("inputParam", obj);
-        final AsyncHttpClient client = new AsyncHttpClient();
-        Header[] headers = {
-                new BasicHeader("Content-type", "application/x-www-form-urlencoded")
-                ,new BasicHeader("Accep", "application/json, text/javascript, */*")
-                ,new BasicHeader("Connection", "keep-alive")
-                ,new BasicHeader("keep-alive", "115")
-        };
-        final Context context = this.context;
+
         client.post(context,options.getUrl(),headers, params,"application/x-www-form-urlencoded", new JsonHttpResponseHandler(){
             @Override
             public void onStart() {
                 super.onStart();
-                System.out.println("onStart getNotification");
+                System.out.println("upside:onStart getNotification");
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -226,11 +227,11 @@ public class Receiver extends BroadcastReceiver {
                     for(int i = 0; i < paramList.length(); i++){
                         JSONObject notification = paramList.getJSONObject(i);
                         int notification_pull_status = notification.getInt("notification_pull_status");
-                        System.out.println("notification_pull_status = "+notification_pull_status);
+                        System.out.println("upside:notification_pull_status = "+notification_pull_status);
                         if(notification_pull_status == 0){
                             hasNotification = true;
                             notificationIds.put(notification.getInt("notification_id"));
-                            System.out.println("notification_id = "+notification.getInt("notification_id"));
+                            System.out.println("upside:notification_id = "+notification.getInt("notification_id"));
                         }
                     }
                 }catch (JSONException e){
@@ -248,38 +249,8 @@ public class Receiver extends BroadcastReceiver {
                             mgr.notify(id, buildNotification().build());
                         }
                     }
-                    System.out.println("response = "+response);
-                    RequestParams params1 = new RequestParams();
-                    JSONObject obj1 = new JSONObject();
-                    try {
-                        obj1.put("notificationList", notificationIds);
-                        obj1.put("apiKey", options.getApiKey());
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    params1.put("url", options.getAcknowledgeURL());
-                    params1.put("inputParam", obj1);
-                    System.out.println("aknowledgement params = "+params1.toString());
-                    client.post(context,options.getAcknowledgeURL(),headers, params1,"application/x-www-form-urlencoded", new JsonHttpResponseHandler(){
-                        @Override
-                        public void onStart() {
-                            super.onStart();
-                            System.out.println("Started aknowledgement");
-                        }
-
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            System.out.println("Succecc aknowledgement"+response.toString());
-                            super.onSuccess(statusCode, headers, response);
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            System.out.println("Failed aknowledgement = "+responseString);
-                            super.onFailure(statusCode, headers, responseString, throwable);
-                        }
-                    });
+                    System.out.println("upside:response = "+response);
+                    acknowledge(notificationIds);
                 }
             }
             @Override
@@ -292,8 +263,42 @@ public class Receiver extends BroadcastReceiver {
             }
         });
 
-    }
 
+
+
+    }
+    public void acknowledge(JSONArray notificationIds){
+        RequestParams params1 = new RequestParams();
+        JSONObject obj1 = new JSONObject();
+        try {
+            obj1.put("notificationList", notificationIds);
+            obj1.put("apiKey", options.getApiKey());
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        params1.put("inputParam", obj1);
+        System.out.println("upside:aknowledgement params = "+params1.toString());
+        client.post(context,options.getAcknowledgeURL(),headers, params1,"application/x-www-form-urlencoded", new JsonHttpResponseHandler(){
+            @Override
+            public void onStart() {
+                super.onStart();
+                System.out.println("upside:Started aknowledgement");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                System.out.println("upside:Succecc aknowledgement"+response.toString());
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                System.out.println("upside:Failed aknowledgement = "+responseString);
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
     /**
      * Fires ontrigger event.
      */
