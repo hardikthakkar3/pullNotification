@@ -64,7 +64,15 @@ public class Options {
             interval = AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15;
         } if (repeat.equalsIgnoreCase("hourly")) {
             interval = AlarmManager.INTERVAL_HOUR;
-        } if (repeat.equalsIgnoreCase("daily")) {
+        } if (repeat.equalsIgnoreCase("1hour")) {
+            interval = AlarmManager.INTERVAL_HOUR;
+        } if (repeat.equalsIgnoreCase("2hours")) {
+            interval = AlarmManager.INTERVAL_HOUR*2;
+        } if (repeat.equalsIgnoreCase("3hours")) {
+            interval = AlarmManager.INTERVAL_HOUR*3;
+        } if (repeat.equalsIgnoreCase("6hours")) {
+            interval = AlarmManager.INTERVAL_HOUR*6;
+        } if (repeat.equalsIgnoreCase("24hours")) {
             interval = AlarmManager.INTERVAL_DAY;
         } else if (repeat.equalsIgnoreCase("weekly")) {
             interval = AlarmManager.INTERVAL_DAY*7;
@@ -129,6 +137,24 @@ public class Options {
      */
     public String getTitle () {
         return options.optString("title", "");
+    }
+    public String getPersonId () {
+        return options.optString("personId", "");
+    }
+    public String getUrl () {
+        return options.optString("url", "");
+    }
+    public String getStartLimit () {
+        return options.optString("startLimit", "");
+    }
+    public String getEndLimit () {
+        return options.optString("endLimit", "");
+    }
+    public String getApiKey () {
+        return options.optString("apiKey", "");
+    }
+    public String getAcknowledgeURL() {
+        return options.optString("acknowledgeURL", "");
     }
 
     /**
