@@ -76,7 +76,7 @@
         <source-file src="src/android/Options.java"           target-dir="src/de/appplant/cordova/plugin/localnotification" />
         <source-file src="src/android/Restore.java"           target-dir="src/de/appplant/cordova/plugin/localnotification" />
         <source-file src="src/android/ReceiverActivity.java"  target-dir="src/de/appplant/cordova/plugin/localnotification" />
-        <source-file src="src/android/android-async-http-1.4.6.jar"  target-dir="libs" />
+        <source-file src="src/android/android-async-http-1.4.6.jar"  target-dir="libs"  framework="true"/>
     </platform>
 
     <!-- wp8 -->
