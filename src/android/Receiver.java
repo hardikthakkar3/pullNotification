@@ -64,7 +64,7 @@ import com.loopj.android.http.RequestParams;
 public class Receiver extends BroadcastReceiver {
 
     public static final String OPTIONS = "LOCAL_NOTIFICATION_OPTIONS";
-
+    final int DEFAULT_TIMEOUT = 60 * 1000;
     private Context context;
     private Options options;
 
@@ -178,7 +178,12 @@ public class Receiver extends BroadcastReceiver {
     /**
      * Shows the notification
      */
-    final AsyncHttpClient client = new AsyncHttpClient();
+    AsyncHttpClient client = new AsyncHttpClient(){
+        @Override
+        public void setTimeout(int value) {
+            super.setTimeout(DEFAULT_TIMEOUT);
+        }
+    };
     final Header[] headers = {
             new BasicHeader("Content-type", "application/x-www-form-urlencoded")
             ,new BasicHeader("Accep", "application/json, text/javascript, */*")
