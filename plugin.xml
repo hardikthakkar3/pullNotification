@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
-        id="com.hardik.thakkar.pullNotification" version="0.0.1">
+        id="com.hardik.thakkar.pullNotification" version="0.0.2">
     <name>PullNotification</name>
     <description>Pull notification plugin for Cordova 3.x.x</description>
     <repo>https://github.com/hardikthakkar3/pullNotification.git</repo>
