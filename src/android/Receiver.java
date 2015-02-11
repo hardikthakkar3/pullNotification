@@ -284,6 +284,13 @@ public class Receiver extends BroadcastReceiver {
         }
         params1.put("inputParam", obj1);
         System.out.println("upside:aknowledgement params = "+params1.toString());
+        client = null;
+        client = new AsyncHttpClient(){
+            @Override
+            public void setTimeout(int value) {
+                super.setTimeout(DEFAULT_TIMEOUT);
+            }
+        };
         client.post(context,options.getAcknowledgeURL(),headers, params1,"application/x-www-form-urlencoded", new JsonHttpResponseHandler(){
             @Override
             public void onStart() {
